@@ -152,7 +152,9 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="w-full max-w-lg rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-800 shadow-sm">
           <p className="font-semibold">Failed to load the post.</p>
           <p className="mt-2">
-            {error instanceof Error ? error.message : 'Please try again or go back to the homepage.'}
+            {error instanceof Error
+              ? error.message
+              : 'Please try again or go back to the homepage.'}
           </p>
           <div className="mt-4 flex gap-3">
             <Link

@@ -23,8 +23,15 @@ const formatDate = (value: string | null): string => {
 const firstLetter = (value: string): string => (value ? value.charAt(0).toUpperCase() : '?');
 
 const PostCard: FC<PostCardProps> = ({ post }) => {
-  const { title, excerpt, slug, cover_url: coverUrl, tags, published_at: publishedAt, read_time_minutes: readTimeMinutes } =
-    post;
+  const {
+    title,
+    excerpt,
+    slug,
+    cover_url: coverUrl,
+    tags,
+    published_at: publishedAt,
+    read_time_minutes: readTimeMinutes,
+  } = post;
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md focus-within:-translate-y-1 focus-within:shadow-md focus:outline-none">
