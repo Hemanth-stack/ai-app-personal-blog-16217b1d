@@ -1,7 +1,7 @@
 'use client';
 
-import PostCard from './components/PostCard';
+import Home from './components/Home';
 
 export default function Home() {
-  return <PostCard />;
+  return <Home />;
 }
