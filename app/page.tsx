@@ -3,9 +3,18 @@ import Link from 'next/link';
 import { ArrowUpRight, BookOpen, PenSquare, Rss } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import PostCard from './components/PostCard';
+import { mockPosts } from '@/lib/mock/posts';
 import type { Post } from '@/lib/types/post';
 
 async function fetchPosts(): Promise<Post[]> {
+  const hasSupabaseEnv: boolean =
+    Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+    Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
+  if (!hasSupabaseEnv) {
+    return mockPosts;
+  }
+
   const supabase = createClient();
   const { data, error } = await supabase
     .from<Post>('posts')
@@ -13,10 +22,10 @@ async function fetchPosts(): Promise<Post[]> {
     .order('published_at', { ascending: false });
 
   if (error) {
-    throw new Error(error.message);
+    return mockPosts;
   }
 
-  return data ?? [];
+  return data && data.length > 0 ? data : mockPosts;
 }
 
 function PostsSkeleton() {
@@ -86,7 +95,7 @@ async function PostsSection() {
         role="alert"
         className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-800"
       >
-        {(error instanceof Error ? error.message : 'Failed to load posts. Please try again later.')}
+        {error instanceof Error ? error.message : 'Failed to load posts. Please try again later.'}
       </div>
     );
   }
